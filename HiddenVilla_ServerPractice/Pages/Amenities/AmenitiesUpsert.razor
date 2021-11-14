@@ -1,0 +1,58 @@
+﻿@page "/amenities/create"
+@page "/amenities/edit/{Id:int}"
+
+<div class="row mt-2 mb-5">
+
+    @* Page Header/Title *@
+    <h3 class="card-title text-info mb-3 ml-3">@Title Amenity</h3>
+
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <EditForm Model="AmenityModel" OnValidSubmit="HandleAmenityUpsert">
+                    <DataAnnotationsValidator />
+                    @* Global Form Validation Display *@
+                    @* <ValidationSummary/> *@
+
+                    @* Amenity Name Input *@
+                    <div class="form-group">
+                        <label>Name</label>
+                        <InputText @bind-Value="AmenityModel.Name" class="form-control"></InputText>
+                        <ValidationMessage For="() => AmenityModel.Name"></ValidationMessage>
+                    </div>
+
+                    @* Amenity Description Input *@
+                    <div class="form-group">
+                        <label>Description</label>
+                        <InputTextArea @bind-Value="AmenityModel.Description" class="form-control"></InputTextArea>
+                        <ValidationMessage For="() => AmenityModel.Description"></ValidationMessage>
+                    </div>
+
+                    @* Amenity Timeing Input *@
+                    <div class="form-group">
+                        <label>Timeing</label>
+                        <InputText @bind-Value="AmenityModel.Timeing" class="form-control"></InputText>
+                        <ValidationMessage For="() => AmenityModel.Timeing"></ValidationMessage>
+                    </div>
+
+                    @* Amenity IconStyle Input *@
+                    <div class="form-group">
+                        <label>Icon Style</label>
+                        <InputText @bind-Value="AmenityModel.IconStyle" class="form-control"></InputText>
+                        <ValidationMessage For="() => AmenityModel.IconStyle"></ValidationMessage>
+                    </div>
+
+                    @* Submit and Back To Index Buttons *@
+                    <div class="form-group">
+                        <button class="btn btn-primary">@Title Amenity</button>
+                        <NavLink href="hotel-amenities" class="btn btn-secondary">Back to Index</NavLink>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+}

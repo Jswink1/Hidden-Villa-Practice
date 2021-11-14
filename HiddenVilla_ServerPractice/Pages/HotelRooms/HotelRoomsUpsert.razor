@@ -1,0 +1,132 @@
+﻿@page "/hotel-room/create"
+@page "/hotel-room/edit/{Id:int}"
+@attribute [Authorize(Roles = SD.Role_Admin)]
+
+<div class="row mt-2 mb-5">
+    @* Page Header/Title *@
+    <h3 class="card-title text-info mb-3 ml-3">@Title Hotel Room</h3>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <EditForm Model="HotelRoomModel" OnValidSubmit="HandleHotelRoomUpsert">
+                    <DataAnnotationsValidator />
+                    @* Global Form Validation Display *@
+                    @* <ValidationSummary/> *@
+
+                    @* Hotel Room Name Input *@
+                    <div class="form-group">
+                        <label>Name</label>
+                        <InputText @bind-Value="HotelRoomModel.Name" class="form-control"></InputText>
+                        <ValidationMessage For="() => HotelRoomModel.Name"></ValidationMessage>
+                    </div>
+
+                    @* Hotel Room Occupancy Input *@
+                    <div class="form-group">
+                        <label>Occupancy</label>
+                        <InputNumber @bind-Value="HotelRoomModel.Occupancy" class="form-control"></InputNumber>
+                        <ValidationMessage For="() => HotelRoomModel.Occupancy"></ValidationMessage>
+                    </div>
+
+                    @* Hotel Room Regular Rate Input *@
+                    <div class="form-group">
+                        <label>Rate</label>
+                        <InputNumber @bind-Value="HotelRoomModel.RegularRate" class="form-control"></InputNumber>
+                        <ValidationMessage For="() => HotelRoomModel.RegularRate"></ValidationMessage>
+                    </div>
+
+                    @* Hotel Square Feet Input *@
+                    <div class="form-group">
+                        <label>Sq ft.</label>
+                        <InputText @bind-Value="HotelRoomModel.SqFt" class="form-control"></InputText>
+                    </div>
+
+                    @* Hotel Room Details Quill Blazored TextArea *@
+                    <div class="form-group" style="height: 150px;">
+                        <label>Details</label>
+                        @*<InputTextArea @bind-Value="HotelRoomModel.Details" class="form-control"></InputTextArea>*@
+                        <BlazoredTextEditor @ref="@QuillHtml" Placeholder="Please enter room detals">
+                            <ToolbarContent>
+                                <select class="ql-header">
+                                    <option selected=""></option>
+                                    <option value="1"></option>
+                                    <option value="2"></option>
+                                    <option value="3"></option>
+                                    <option value="4"></option>
+                                    <option value="5"></option>
+                                </select>
+                                <span class="ql-formats">
+                                    <button class="ql-bold"></button>
+                                    <button class="ql-italic"></button>
+                                    <button class="ql-underline"></button>
+                                    <button class="ql-strike"></button>
+                                </span>
+                                <span class="ql-formats">
+                                    <select class="ql-color"></select>
+                                    <select class="ql-background"></select>
+                                </span>
+                                <span class="ql-formats">
+                                    <button class="ql-list" value="ordered"></button>
+                                    <button class="ql-list" value="bullet"></button>
+                                </span>
+                                <span class="ql-formats">
+                                    <button class="ql-link"></button>
+                                </span>
+                            </ToolbarContent>
+                            <EditorContent>
+
+                            </EditorContent>
+                        </BlazoredTextEditor>
+                    </div>
+
+                    @* Hotel Image File Upload *@
+                    <div class="form-group" style="padding-top:70px;">
+                        <InputFile OnChange="HandleImageUpload" multiple></InputFile>
+                        <div class="row">
+
+                            @*Image Loading Spinner*@
+                            @if (IsImageLoading)
+                            {
+                                <div class="col-md-12">
+                                    <span><i class="fa fa-spin fa-spinner"></i> Loading...</span>
+                                </div>
+                            }
+
+                            @* Hotel Room Images *@
+                            @if (HotelRoomModel.ImageUrls != null && HotelRoomModel.ImageUrls.Count > 0)
+                            {
+                                int serial = 1;
+
+                                foreach (var roomImage in HotelRoomModel.ImageUrls)
+                                {
+                                    @* Image & Serial Number *@
+                                    <div class="col-md-2 mt-3">
+                                        <div class="room-image" style="background: url('@roomImage') 50% 50%; ">
+                                            <span class="room-image-title">@serial</span>
+                                        </div>
+
+                                        @* Delete Image Button *@
+                                        <button type="button" class="btn btn-outline-danger btn-block mt-4" @onclick="() => DeletePhoto(roomImage)">
+                                            Delete
+                                        </button>
+                                    </div>
+
+                                    serial++;
+                                }
+                            }
+                        </div>
+                    </div>
+
+                    @* Submit and Back To Index Button *@
+                    <div class="form-group mt-5">
+                        <button class="btn btn-primary">@Title Room</button>
+                        <NavLink href="hotel-rooms" class="btn btn-secondary">Back to Index</NavLink>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+}

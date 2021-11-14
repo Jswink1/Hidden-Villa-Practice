@@ -1,0 +1,62 @@
+﻿@page "/amenities"
+
+<div class="row mt-4">
+    @* Page Header/Title *@
+    <div class="col-8">
+        <h4 class="card-title text-info">Hotel Amenities</h4>
+    </div>
+    @* Add New Amenity Button *@
+    <div class="col-3 offset-1">
+        <NavLink href="amenities/create" class="btn btn-info form-control">Add New Amenity</NavLink>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <table class="table table-bordered table-hover">
+            @* Amenities table head *@
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Timeing</th>
+                    <th>IconStyle</th>
+                    <th></th>
+                </tr>
+            </thead>
+            @* Amenities table body *@
+            <tbody>
+                @if (Amenities.Any())
+                {
+                    foreach (var amenity in Amenities)
+                    {
+                        <tr>
+                            @* Amenities data *@
+                            <td>@amenity.Name</td>
+                            <td>@amenity.Timeing</td>
+                            <td><i class="@amenity.IconStyle"></i></td>
+                            @* Edit and Delete Button *@
+                            <td>
+                                <NavLink href="@($"amenities/edit/{amenity.Id}")" class="btn btn-primary">Edit</NavLink>
+                                <button class="btn btn-danger" @onclick="() => HandleDelete(amenity.Id)">Delete</button>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5">
+                            No Records Found
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<DeleteConfirmation UserDeleteSelection="ProcessDelete_Click" IsParentDeleteProcessing="IsDeleteProcessing"></DeleteConfirmation>
+
+@code {
+
+}
